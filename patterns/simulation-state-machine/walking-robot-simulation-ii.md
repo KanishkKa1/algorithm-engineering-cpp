@@ -337,6 +337,95 @@ if (num == 0) {
 
 ## Step 9: Engineering Takeaways
 
+- Always check for **cyclic behavior** in simulation problems
+  - Repeated patterns can be compressed using modulo
+
+- Avoid naive step-by-step simulation when:
+  - movement is repetitive
+  - constraints are large
+
+- Model problems as **state machines** when:
+  - behavior depends on current state (position + direction)
+  - transitions are deterministic
+
+- Convert global movement into **local transitions**
+  - handle movement edge-by-edge instead of step-by-step
+
+- Identify **implicit structure**
+  - here: robot never explores full grid → only perimeter
+
+- Handle edge cases explicitly:
+  - full cycle (`num % perimeter == 0`)
+  - direction at origin after cycle
+
+- Optimize based on constraints:
+  - large `num` → requires cycle compression
+
 ---
 
 ## Pattern Mapping
+
+- **Pattern**: Simulation + State Machine  
+- **Core Technique**: Cyclic Path Compression  
+
+---
+
+### Signals
+
+- Repeated movement over fixed path  
+- Deterministic transitions based on state  
+- Large number of steps (`num` up to 1e5)  
+- Boundary-driven direction changes  
+- Finite number of unique states  
+
+---
+
+### Key Abstractions
+
+- **State** → `(x, y, dir)`  
+- **Cycle** → perimeter of rectangle  
+- **Transition** → directional movement + boundary rotation  
+
+---
+
+### When to Apply This Pattern
+
+- Robot / movement simulation problems  
+- Circular or perimeter traversal problems  
+- Problems with:
+  - repeated steps
+  - fixed path
+  - deterministic rules  
+
+---
+
+### Common Mistakes
+
+- Simulating each step individually → leads to TLE  
+- Ignoring cyclic nature of system  
+- Not modeling direction as part of state  
+- Missing special case when completing full cycle  
+
+---
+
+## Post-Mortem
+
+- Initial intuition: simulate movement step-by-step  
+- Bottleneck identified: repeated traversal of same path  
+- Key breakthrough: recognizing **perimeter cycle**  
+- Final optimization: reduce steps using modulo and process in segments  
+
+---
+
+## Generalization
+
+This approach applies to:
+
+- Circular arrays (modulo traversal)  
+- Grid boundary traversal problems  
+- State machine simulations with finite cycles  
+- Any system where:
+  - state repeats after fixed number of steps  
+
+> Always ask:
+> “Does this system repeat? If yes, what is the cycle length?”
