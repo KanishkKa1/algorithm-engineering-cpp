@@ -295,3 +295,29 @@ This approach applies to:
 
 > Always ask:
 > “Is there real structure to optimize, or is brute force already optimal?”
+
+## Why This Problem Matters
+
+- Tests ability to **analyze constraints before optimizing**
+- Designed to mislead into using:
+  - prefix sum
+  - segment tree
+- Reinforces:
+  - recognizing when brute force is optimal
+  - avoiding unnecessary abstraction
+
+> This problem evaluates decision-making, not implementation complexity.
+
+## Wrong Approaches Considered
+
+- Prefix Sum / Difference Array
+  - Fails due to non-contiguous updates (`idx += k`)
+
+- Segment Tree / Lazy Propagation
+  - Overkill for given constraints
+  - Updates are sparse, not range-based
+
+- Precomputing contributions
+  - Complex and unnecessary given constraints
+
+> Key lesson: Not every problem benefits from advanced data structures.
