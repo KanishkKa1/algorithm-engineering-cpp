@@ -1,20 +1,40 @@
 # Patterns
 
-This directory organizes problems by **underlying problem-solving patterns**, not by platform or topic.
+This folder groups algorithmic problems by the underlying problem-solving patterns used to solve them, rather than by contest platform or problem source.
 
-## Categories
+The goal is to help you:
 
-- union-find → connectivity under constraints
-- simulation-state-machine → state-driven transitions and cyclic systems
-- dp → overlapping subproblems and optimal substructure
-- graphs → traversal, shortest paths, connectivity
+- identify the right pattern for a new problem
+- reuse existing solutions and techniques
+- think in terms of structures and strategies instead of ad hoc casework
 
-## Goal
+## How to use this folder
 
-Move from:
+1. Read the problem statement and look for the core behavior:
+   - is it about connectivity under changing constraints?
+   - does it simulate a state machine or repeat transitions?
+   - does it require maintaining ranges, counts, or parity?
+2. Open the matching pattern subfolder.
+3. Study the example problems, notes, and templates.
+4. Reuse the pattern names and approaches when solving similar problems.
 
-- solving problems
+## Available categories
 
-to:
+- `union-find/` — connectivity under constraints, component merging, and dynamic connectivity
+- `simulation-state-machine/` — state-driven transitions, cyclic behavior, and repeated simulation
+- `range-processing/` — range updates, queries, and aggregate transforms
 
-- recognizing reusable patterns
+## Notes
+
+- Each category contains problem notes, explanations, and implementation examples.
+- This structure is designed to support learning by pattern, not by specific contest names.
+- New categories should be added when a new recurring technique emerges.
+
+## Contributing
+
+To add a new pattern:
+
+1. Create a new folder with a descriptive name.
+2. Add a `README.md` or problem notes file explaining the pattern.
+3. Add example problems and code templates if available.
+4. Keep the explanation focused on when the pattern applies and how it is recognized.
