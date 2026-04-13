@@ -13,16 +13,19 @@ The goal is to help you:
 1. Read the problem statement and look for the core behavior:
    - is it about connectivity under changing constraints?
    - does it simulate a state machine or repeat transitions?
-   - does it require maintaining ranges, counts, or parity?
+   - does it require maintaining ranges, counts, degrees, or parity?
 2. Open the matching pattern subfolder.
 3. Study the example problems, notes, and templates.
 4. Reuse the pattern names and approaches when solving similar problems.
 
 ## Available categories
 
-- `union-find/` — connectivity under constraints, component merging, and dynamic connectivity
-- `simulation-state-machine/` — state-driven transitions, cyclic behavior, and repeated simulation
+- `dynamic-programming/` -
+- `graph-degree/` — role identification via in/out-degree signatures in directed graphs
+- `graph/` -
 - `range-processing/` — range updates, queries, and aggregate transforms
+- `simulation-state-machine/` — state-driven transitions, cyclic behavior, and repeated simulation
+- `union-find/` — connectivity under constraints, component merging, and dynamic connectivity
 
 ## Notes
 

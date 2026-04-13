@@ -120,8 +120,8 @@ comp[u] == comp[v];
 
 ## Insight
 
-- DSU is not necessary here  
-- A simple linear scan + component labeling is sufficient  
+- DSU is not necessary here
+- A simple linear scan + component labeling is sufficient
 
 ---
 
@@ -133,12 +133,14 @@ comp[u] == comp[v];
 | Component labeling  | Simpler, faster in practice  | Problem-specific    |
 | BFS per query       | Easy to reason               | Too slow            |
 
+This trade-off analysis follows the "Data Structure Justification" step in the framework, weighing alternatives against problem requirements.
+
 ---
 
 ## Decision
 
-- **DSU** → Good for general connectivity problems  
-- **Component labeling** → Optimal for this linear structure  
+- **DSU** → Good for general connectivity problems
+- **Component labeling** → Optimal for this linear structure
 
 ---
 
@@ -158,10 +160,10 @@ comp[u] == comp[v];
 
 ## Step 10: Edge Cases
 
-- Single element → trivially connected  
-- All differences > maxDiff → all nodes isolated  
-- Entire array valid → single component  
-- Queries where `u == v` → always true  
+- Single element → trivially connected
+- All differences > maxDiff → all nodes isolated
+- Entire array valid → single component
+- Queries where `u == v` → always true
 
 ---
 
@@ -216,6 +218,8 @@ public:
 };
 ```
 
+---
+
 ## Step 12: Engineering Takeaways
 
 - Always check if the graph is **implicit and structured**
@@ -230,14 +234,14 @@ public:
 
 ## Pattern Mapping
 
-- **Pattern**: Connected Components  
-- **Technique**: DSU / Linear Component Labeling  
+- **Pattern**: Connected Components
+- **Technique**: DSU / Linear Component Labeling
 
 ### Signals
 
-- Repeated connectivity queries  
-- Static graph (no updates between queries)  
-- Local constraints leading to global connectivity  
+- Repeated connectivity queries
+- Static graph (no updates between queries)
+- Local constraints leading to global connectivity
 
 ---
 
@@ -252,15 +256,17 @@ public:
 - Alternative solution (labeling) revealed that:
   - DSU was **not required**, only convenient
 
+This post-mortem follows the framework's emphasis on reflection to improve pattern recognition.
+
 ---
 
 ## Generalization
 
 This pattern applies to:
 
-- Grouping problems based on threshold differences  
-- Clustering contiguous valid segments  
-- Connectivity queries on **static datasets**  
+- Grouping problems based on threshold differences
+- Clustering contiguous valid segments
+- Connectivity queries on **static datasets**
 - Problems where:
-  - constraints are local  
-  - but effects are global  
+  - constraints are local
+  - but effects are global

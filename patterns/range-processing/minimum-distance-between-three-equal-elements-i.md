@@ -2,6 +2,8 @@
 
 ---
 
+## leetcode 3740
+
 link - <https://leetcode.com/problems/minimum-distance-between-three-equal-elements-i/>
 
 ---
