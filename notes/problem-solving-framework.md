@@ -1,147 +1,112 @@
 # Algorithmic Problem Solving Framework (Engineering-Oriented)
 
-This framework is used to solve algorithmic problems with a focus on reasoning, constraint analysis, and reusable patterns.  
-The goal is not just to solve problems, but to understand *why* a solution works and when it applies.
+This framework is optimized for *repeatable decision making*: quickly eliminate infeasible approaches, isolate the true abstraction, and justify the final design with invariants.
 
 ---
 
-## Step 0: Problem Reframing
+## Step 0: Reframe (name the abstraction)
 
-- What is the problem fundamentally asking?
-- Is it:
-  - Connectivity?
-  - Optimization?
-  - Counting?
-  - Validation under constraints?
+Ask: what is the problem *really* about?
 
-> Weak signal: “This is a graph problem”  
-> Strong signal: “This is connectivity under constraints”
+- Connectivity under constraints (DSU / BFS-once)
+- Streaming + last-seen (min distance, first collision)
+- Range aggregation / offline updates
+- Finite-state simulation (position + direction, cycles)
+- DP over minimal state (overlapping subproblems)
 
----
-
-## Step 1: Problem Analysis
-
-- Clearly define:
-  - Inputs
-  - Outputs
-  - Constraints
-- Extract keywords:
-  - contiguous → sliding window
-  - sorted → binary search
-  - limit/threshold → constraint filtering
+Weak: “this is a graph problem”  
+Strong: “this is role identification by in/out-degree signature”
 
 ---
 
-## Step 2: Constraint Filtering
+## Step 1: Extract constraints into a budget
 
-- Use input size to eliminate infeasible approaches
+Constraint sizes should directly kill approaches.
 
-| Input Size | Expected Complexity |
-|-----------|-------------------|
-| n ≤ 20 | O(2^n) |
-| n ≤ 1e3 | O(n²) |
-| n ≤ 1e5 | O(n log n) / O(n) |
+| Scale | Usually feasible |
+|---:|---|
+| `n <= 20` | `O(2^n)` |
+| `n <= 300` | `O(n * 26^2)` |
+| `n <= 2e3` | `O(n^2)` |
+| `n <= 1e5` | `O(n)` / `O(n log n)` |
+| Many queries | precompute once; answer fast |
 
----
-
-## Step 3: Brute Force (Correctness First)
-
-- Build the simplest correct solution
-- Explicitly compute complexity
-- Identify where it fails
+Rule: don’t “optimize later”. Pick an approach that fits the budget from the start.
 
 ---
 
-## Step 4: Recomputations (Optimization Lever)
+## Step 2: Brute force (correctness first)
 
-- What work is repeated?
-- Is the same computation done multiple times?
-- Can results be reused?
+- Write the simplest correct idea.
+- Compute complexity (including nested loops, digit-cost, graph edges).
+- Identify *why* it fails under the constraints (time or memory).
 
-> This step bridges brute force → optimal
-
----
-
-## Step 5: Monotonicity Detection
-
-- Does increasing input relax constraints?
-- Can the problem be processed incrementally?
-
-Common signals:
-
-- Increasing limit
-- Expanding valid set
-- No rollback required
+The goal is to make the failure mode obvious: *what work is being repeated?*
 
 ---
 
-## Step 6: Pattern Mapping
+## Step 3: Identify repeated work (the optimization lever)
 
-Only after previous steps:
+Typical sources of wasted work:
 
-- Sliding Window → local constraints on subarray
-- Binary Search → monotonic answer space
-- DSU → dynamic connectivity
-- DP → overlapping subproblems
-- Greedy → locally optimal leads to global optimum
-
----
-
-## Step 7: State / Invariant Definition
-
-- Define the minimal state required
-- Define invariant clearly
-
-Example:
-
-- Sliding window → no duplicates in window
-- DSU → nodes in same component are connected
-
-> If invariant breaks → solution fails
+- Recomputing connectivity per query (should be build-once)
+- Re-scanning ranges for each endpoint (should be prefix / last-seen / offline)
+- Simulating each step in a cyclic system (should be modulo + chunking)
+- DP with symmetric state (should normalize/remove identity)
 
 ---
 
-## Step 8: Data Structure Justification
+## Step 4: Define minimal state + invariant
 
-- Why this data structure?
-- Why not alternatives?
+You want the smallest state that makes transitions local and proofs short.
 
-Example:
+Examples:
 
-- DSU vs BFS per query → avoids recomputation
-- Array vs map → cache-friendly, constant time
+- Sliding window: invariant “no duplicates in window”
+- DSU: invariant “same parent ⇒ connected”
+- Simulation: state `(x, y, dir)` and deterministic transition
+- DP: state must uniquely represent all future-relevant information
 
----
-
-## Step 9: Transition Logic
-
-- How does state evolve?
-- What triggers state updates?
+If you can’t state the invariant in one sentence, the solution is not stable yet.
 
 ---
 
-## Step 10: Edge Case Validation
+## Step 5: Data structure justification
 
-Actively test:
+For the final design, explicitly answer:
 
-- Empty input
-- Single element
-- Maximum constraints
-- Uniform values
+- Why this DS / technique is sufficient (and what it tracks)
+- Why simpler alternatives fail
+- Why heavier alternatives are unnecessary
 
----
-
-## Step 11: Implementation
-
-- Clean, readable, minimal
-- Avoid unnecessary abstractions
+This is what turns a “working solution” into an “interview-ready solution”.
 
 ---
 
-## Post-Mortem (Critical)
+## Step 6: Edge cases (validate the model)
+
+Target the edges that break invariants:
+
+- Empty / size-1 inputs
+- “all equal”, “all distinct”
+- Degenerate geometry (width=1 / height=1)
+- Full cycles (`k % cycle == 0`) in simulations
+- `u == v` / repeated queries
+
+---
+
+## Step 7: Implementation discipline
+
+- Keep code surface area small (fewer moving parts = fewer bugs).
+- Prefer explicit names over cleverness.
+- Avoid special casing by choosing the right initialization (common DP bug source).
+
+---
+
+## Post-mortem (how you actually get better)
 
 After solving:
 
-- What signal did I miss?
-- What incorrect assumption did I make?
-- Can this pattern generalize?
+- What signal did you miss early?
+- Which wrong approach was most tempting and why?
+- What is the reusable pattern name for this problem?
