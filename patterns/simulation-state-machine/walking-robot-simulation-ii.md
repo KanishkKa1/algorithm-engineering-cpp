@@ -6,18 +6,17 @@
 
 link - <https://leetcode.com/problems/walking-robot-simulation-ii/>
 
---
+---
 
 ## Step 0: Reframing
 
-- The robot moves along the boundary of a rectangular grid.
-- Movement is constrained by grid limits and direction changes at boundaries.
-- The system behaves as a **finite state machine** defined by position `(x, y)` and direction.
-- The robot’s path is cyclic and repeats after completing one full perimeter traversal.
-- Each step operation advances the robot along this cycle.
-- The problem reduces to simulating transitions over a **cyclic perimeter path**.
+- The robot never explores the full grid; it only moves along the **perimeter**.
+- The system is deterministic with a small state:
+  - position `(x, y)`
+  - direction `dir`
+- Movement repeats: walking around the perimeter is a cycle.
 
-> This is a **state machine simulation over a cyclic path with boundary-driven transitions**.
+This is a finite-state simulation with an explicit cycle length.
 
 ---
 

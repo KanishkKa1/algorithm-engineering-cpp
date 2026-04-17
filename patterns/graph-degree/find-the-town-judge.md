@@ -1,5 +1,11 @@
 # Find the Town Judge
 
+---
+
+Leetcode Link - <https://leetcode.com/problems/find-the-town-judge>
+
+---
+
 ## Step 0: Reframing
 
 - This is not about “rumors”; it’s a **graph identification** problem.
@@ -16,10 +22,22 @@
 
 ## Step 2: Brute Force
 
-- For each person `i`, verify:
-  - they trust nobody (no outgoing edges),
-  - everyone else trusts them (incoming from all other nodes).
-- If implemented via adjacency checks, it becomes `O(n * (n + m))` (or `O(n^2)` with a matrix), which is unnecessary and more error-prone.
+### Idea
+
+- For each node `i`, scan the trust list to verify:
+  - nobody is trusted by `i`
+  - everybody else trusts `i`
+
+### Complexity
+
+- Time: `O(n * m)` (or `O(n^2)` if you build a matrix).
+- Space: `O(1)` / `O(n^2)` depending on representation.
+
+### Why it fails as an engineering solution
+
+- It’s avoidable: the judge constraints are counts, so repeatedly re-scanning edges is pure recomputation.
+
+---
 
 ## Step 3: Optimization / Insight
 
@@ -75,10 +93,14 @@ public:
 };
 ```
 
+---
+
 ## Step 8: Engineering Takeaways
 
-- When the spec describes global social rules, translate them into **invariants on counts** (degrees) before reaching for graph traversal.
-- Prefer **signature-based identification** (here: `(in=n-1, out=0)`) over building full adjacency when only aggregate facts are required.
+- If the spec defines a role using “everyone points to X / X points to nobody”, translate it into a **degree signature** immediately.
+- Don’t build adjacency or run graph traversal when only aggregate counts are required.
+
+---
 
 ## Pattern Mapping
 
@@ -90,10 +112,13 @@ public:
   - forgetting the `n==1` case
   - using a matrix / nested checks despite small needed state
   - mixing 0/1-indexing when allocating degree arrays
+  - using BFS/DFS for a count-only problem
+
+---
 
 ## Wrong Approaches Considered
 
 - “Pick the most trusted person”:
-  - Fails because the most trusted node might still trust someone (violates judge condition).
-- BFS/DFS from every node:
-  - Solves a different problem (reachability). The judge conditions are local degree constraints, not connectivity.
+  - fails because they might still trust someone (`outDegree > 0`).
+- BFS/DFS reachability:
+  - solves a different question; the judge definition is not about reachability.

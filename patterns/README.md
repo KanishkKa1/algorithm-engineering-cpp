@@ -1,43 +1,46 @@
 # Patterns
 
-This folder groups algorithmic problems by the underlying problem-solving patterns used to solve them, rather than by contest platform or problem source.
+This folder groups problems by the *reasoning pattern* that solves them (the invariant and state), not by platform tags.
 
-The goal is to help you:
+The goal is reuse: when you see a new problem, you should be able to map it to a known structure quickly.
 
-- identify the right pattern for a new problem
-- reuse existing solutions and techniques
-- think in terms of structures and strategies instead of ad hoc casework
+## How to navigate
 
-## How to use this folder
+1. Read the statement and extract the *constraint that dominates* (time, memory, number of queries, update vs query).
+2. Name the abstraction ("connectivity under threshold", "streaming last-seen", "two-cursor DP", "boundary flood fill").
+3. Pick the closest pattern directory and study an example note.
 
-1. Read the problem statement and look for the core behavior:
-   - is it about connectivity under changing constraints?
-   - does it simulate a state machine or repeat transitions?
-   - does it require maintaining ranges, counts, degrees, or parity?
-2. Open the matching pattern subfolder.
-3. Study the example problems, notes, and templates.
-4. Reuse the pattern names and approaches when solving similar problems.
+## Pattern index
 
-## Available categories
+| Pattern folder | What it’s really about | Typical signals |
+|---|---|---|
+| `dynamic-programming/` | Optimal decisions with overlapping subproblems | “minimum/maximum cost”, sequential choices, state reuse |
+| `graph-degree/` | Role identification via in/out-degree signature | “trusted by everyone”, “points to nobody”, special node by counts |
+| `graphs/` | Connectivity / traversal on explicit graphs or grids | reachability, components, flood fill, BFS/DFS |
+| `range-processing/` | Index-based reasoning (streams, last-seen, group-by, diff tricks) | “minimum distance”, many updates, aggregation at the end |
+| `simulation-state-machine/` | Deterministic transitions over finite state | repeated steps, direction/position state, cycles/modulo |
+| `union-find/` | Connectivity under constraints, many queries | “are u and v connected?”, static edges, offline construction |
 
-- `dynamic-programming/` -
-- `graph-degree/` — role identification via in/out-degree signatures in directed graphs
-- `graph/` -
-- `range-processing/` — range updates, queries, and aggregate transforms
-- `simulation-state-machine/` — state-driven transitions, cyclic behavior, and repeated simulation
-- `union-find/` — connectivity under constraints, component merging, and dynamic connectivity
+## Examples in this repo
 
-## Notes
+- Dynamic programming
+  - `dynamic-programming/minimum-distance-to-type-a-word-using-two-fingers.md`
+- Graph degree signature
+  - `graph-degree/find-the-town-judge.md`
+- Graph / grid traversal
+  - `graphs/number-of-enclaves.md`
+- Range processing (streams + updates)
+  - `range-processing/minimum-absolute-distance-between-mirror-pairs.md`
+  - `range-processing/minimum-distance-between-three-equal-elements-i.md`
+  - `range-processing/xor-after-range-multipplication-queries.md`
+  - `range-processing/xor-after-range-multiplication-queries-ii.md`
+- Simulation / state machine
+  - `simulation-state-machine/walking-robot-simulation-ii.md`
+- Union-find / connectivity queries
+  - `union-find/path-existence-queries.md`
 
-- Each category contains problem notes, explanations, and implementation examples.
-- This structure is designed to support learning by pattern, not by specific contest names.
-- New categories should be added when a new recurring technique emerges.
+## Authoring conventions
 
-## Contributing
-
-To add a new pattern:
-
-1. Create a new folder with a descriptive name.
-2. Add a `README.md` or problem notes file explaining the pattern.
-3. Add example problems and code templates if available.
-4. Keep the explanation focused on when the pattern applies and how it is recognized.
+- Notes are reasoning-first: decisions, invariants, and trade-offs matter more than code.
+- Prefer clean stepwise structure (reframing → observations → brute force → insight → final approach).
+- Keep code minimal and interview-ready: small state, explicit invariants, avoid over-engineering.
